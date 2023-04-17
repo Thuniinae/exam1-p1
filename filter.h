@@ -17,21 +17,26 @@ public:
     sc_in_clk clk;
 private:
     sc_ufixed_fast<53,10>_a, _b, _r;
+    sc_ufixed_fast<53,10> buffer[3];
+
 
 private:
     void do_filter(){
+        buffer[0] = 0;
+        buffer[1] = a.read();
+        buffer[2] = a.read();
         a.rdy.write(false);
         b.rdy.write(false);
         r.vld.write(false);
         while (true){
-            _a = a.read();
-            cout << sc_time_stamp() << " receive " << _a << endl;
-            _r = _a + _b;
+            _r = buffer[2]*1/2 + buffer[1]*1/3 + buffer[0]*1/6;
+            wait(3, SC_NS);
             r.write(_r);
-            wait();
+            buffer[0] = buffer[2];
+            buffer[1] = a.read();
+            buffer[2] = a.read();
         }
     }
-        
 };
 
 

@@ -51,6 +51,6 @@ int sc_main(int argc, char *argv[])
 
     testbench.clk(clk);
     filter.clk(clk);
-    //sc_start(40, SC_NS);
+    sc_start(20, SC_NS);
     return 0;
 }
