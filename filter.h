@@ -28,7 +28,7 @@ private:
         a.rdy.write(false);
         b.rdy.write(false);
         r.vld.write(false);
-        while (true){
+        for(int i = 0; i < 63; i++){
             _r = buffer[2]*1/2 + buffer[1]*1/3 + buffer[0]*1/6;
             wait(3, SC_NS);
             r.write(_r);
@@ -36,6 +36,9 @@ private:
             buffer[1] = a.read();
             buffer[2] = a.read();
         }
+        _r = buffer[2]*1/2 + buffer[1]*1/3 + buffer[0]*1/6;
+        wait(3, SC_NS);
+        r.write(_r);
     }
 };
 
