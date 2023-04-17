@@ -45,7 +45,7 @@ private:
     void source();
     void sink();
     void monitor();
-    sc_ufixed_fast<53,10> _a, _b, _r;
+    sc_ufixed_fast<10,1> _a, _b, _r;
     //Store the previous inputs to FIFOs
     sc_int<WIDTH> t_a;
     bool t_a_rdy;
@@ -63,14 +63,17 @@ void TESTBENCH::source(){
         a.write(x_input_signal[i]);
         wait();
     }
+    sc_stop();
 }
 
 void TESTBENCH::sink(){
+    cout << "y_downsample_by2 = " << endl;
     for (int i = 0; i < 128; i++){
         _r = r.read();
-        cout << "y_downsample_by2 = " << _r << endl;
+        cout <<  i <<": " << _r << endl;
         wait();
     }
+    sc_stop();
 }
 
 void TESTBENCH::monitor() {
