@@ -1,0 +1,4 @@
+**/build/
+standard_test_images/
+test/
+.vscode/
